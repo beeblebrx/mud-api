@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id "com.google.protobuf" version "0.8.6"
+    id 'maven-publish'
+}
+
+group 'fi.beeblebrx.mud'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                'Implementation-Version': project.version)
+    }
+}
+
+sourceSets {
+    main {
+        proto {
+            srcDir 'src/main/proto/'
+        }
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.0.0'
+    }
+}
+
+dependencies {
+    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.5.1'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'api'
+            from components.java
+            pom {
+                name = 'Beeblebrx\'s Protobuf MUD API'
+                description = 'A .proto file that describes my MUD API and compiled classes'
+            }
+        }
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
