@@ -17,12 +17,13 @@ message Command {
     string payload = 3;
 }
 
-message Response {
-    enum Status {
-        SUCCESS = 0;
-        ERROR = 1;
+message Event {
+    enum EventType {
+        GENERIC = 0;
+        SUCCESSFUL_RESPONSE = 1;
+        FAILING_RESPONSE = 2;
     }
-    Status status = 1;
+    EventType type = 1;
     string text = 2;
     repeated GameObject objects = 3;
 }
@@ -36,4 +37,5 @@ message GameObject {
     }
     Type type = 1;
     int32 id = 2;
+    string description = 3;
 }
